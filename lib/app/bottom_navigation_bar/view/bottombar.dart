@@ -4,6 +4,7 @@ import 'package:project_santa/ui/features/home/view/HomeScreen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ui/features/auth/view/register_screen/register_screen.dart';
+import '../../../ui/features/category/view/super_category_screen.dart';
 import '../../../ui/features/profile/view/profile_screen.dart';
 import '../view_model/bottom_navigation_bar_viewmodel.dart';
 
@@ -17,7 +18,7 @@ class KNavigationBar extends StatefulWidget {
 class _KNavigationBarState extends State<KNavigationBar> {
   final List<Widget> _pages = [
     Homescreen(),
-    Center(child: Text('Search Page')),
+    SuperCategoryScreen(),
     ProfileScreen()
   ];
 
