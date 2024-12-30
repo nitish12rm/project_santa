@@ -15,15 +15,15 @@ sealed class Result<T> {
   const Result();
 
   /// Creates a successful [Result], completed with the specified [value].
-  const factory Result.ok(T? value) = Ok<T>;
+  const factory Result.ok(T? value) = Ok._;
 
   /// Creates an error [Result], completed with the specified [error].
-  const factory Result.error(Object error) = Error<T>;
+  const factory Result.error(Object error) = Error._;
 }
 
 /// Subclass of Result for values
 final class Ok<T> extends Result<T> {
-  const Ok(this.value);
+  const Ok._(this.value);
 
   /// Returned value in result
   final T? value;
@@ -34,7 +34,7 @@ final class Ok<T> extends Result<T> {
 
 /// Subclass of Result for errors
 final class Error<T> extends Result<T> {
-  const Error(this.error);
+  const Error._(this.error);
 
   /// Returned error in result
   final Object error;

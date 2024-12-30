@@ -1,27 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:project_santa/data/models/AllCategory/all_category.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:project_santa/ui/common/widgets/side_category_tile/side_cat_tile.dart';
 import 'package:project_santa/ui/features/category/view/category_screen.dart';
 
-class SuperCategoryScreen extends StatelessWidget {
+import '../view_models/category_view_model.dart';
+
+class SuperCategoryScreen extends StatefulWidget {
   const SuperCategoryScreen({super.key});
 
   @override
+  State<SuperCategoryScreen> createState() => _SuperCategoryScreenState();
+}
+
+class _SuperCategoryScreenState extends State<SuperCategoryScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-        itemCount: 7,
-        itemBuilder: (context, index) {
-          return KSuperSubCategoryGroupWidget(
-            heading: 'Grocery & Kitchen',
-            imageLink: 'assets/atta.png',
-            title: 'Atta, Rice & Dal',
-            isLoading: false, itemCount: 10, // Set to true to show shimmer
-          );
-        },
-      ),
-    );
+    final viewModel = Provider.of<CategoryViewModel>(context);
+    return ListenableBuilder(listenable: viewModel, builder: (context,child){
+      if(viewModel.isLoading)
+        return CircularProgressIndicator();
+
+      if(viewModel.load.error){
+        return Text(viewModel.error);
+      }
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: viewModel.categories.supercategory?.length ?? 1,
+          itemBuilder: (context, index) {
+            return KSuperSubCategoryGroupWidget(
+              heading: viewModel.categories.supercategory?[index].name??'Grocery & Kitchen',
+              imageLink: 'assets/atta.png',
+              title: 'Atta, Rice & Dal',
+              isLoading: false, itemCount: 10, category: viewModel.categories.supercategory?[index].category??[], // Set to true to show shimmer
+            );
+          },
+        ),
+      );
+    });
   }
 }
 
@@ -31,13 +55,15 @@ class KSuperSubCategoryGroupWidget extends StatelessWidget {
     required this.title,
     required this.imageLink,
     required this.heading,
-    this.isLoading = false, required this.itemCount,
+    this.isLoading = false, required this.itemCount, required this.category,
+
   });
 
   final String heading, title;
   final String imageLink;
   final bool isLoading;
   final int itemCount;
+  final List<Category> category;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +80,7 @@ class KSuperSubCategoryGroupWidget extends StatelessWidget {
         GridView.builder(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: 8,
+          itemCount: category.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             mainAxisSpacing: 10,
             crossAxisSpacing: 10,
@@ -64,7 +90,7 @@ class KSuperSubCategoryGroupWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             return KCategoryCardWidget(
               imageLink: imageLink,
-              title: title,
+              title: category[index].name??"",
               isLoading: isLoading, // Pass the loading state
             );
           },

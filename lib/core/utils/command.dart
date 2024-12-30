@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 
@@ -54,11 +55,14 @@ abstract class Command<T> extends ChangeNotifier {
   Future<void> _execute(CommandAction0<T> action) async {
     // Ensure the action can't launch multiple times.
     // e.g. avoid multiple taps on button
+    log("executed");
+    log("running:$_running");
     if (_running) return;
 
     // Notify listeners.
     // e.g. button shows loading state
     _running = true;
+    log("running:$_running");
     _result = null;
     notifyListeners();
 
@@ -66,6 +70,7 @@ abstract class Command<T> extends ChangeNotifier {
       _result = await action();
     } finally {
       _running = false;
+      log("running:$_running");
       notifyListeners();
     }
   }

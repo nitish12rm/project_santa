@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_santa/ui/features/category/view_models/category_view_model.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:project_santa/ui/common/widgets/product_tile/product_tile.dart';
 import 'package:project_santa/ui/common/widgets/side_category_tile/side_cat_tile.dart';
@@ -8,6 +10,7 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<CategoryViewModel>(context);
     final isLoading = false; // Set to false once data is loaded
 
     return Scaffold(
@@ -53,7 +56,8 @@ class CategoryScreen extends StatelessWidget {
                         childAspectRatio: 0.5,
                       ),
                       itemBuilder: (context, index) {
-                        return ProductTile();
+                        return ChangeNotifierProvider<AddButtonViewModel>(create: (context)=> AddButtonViewModel(),child: ProductTile(),);
+
                       },
                     ),
                   ),
