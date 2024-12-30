@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "350315201940",
+    "project_id": "project-santa-nkg",
+    "storage_bucket": "project-santa-nkg.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350315201940:android:fcd7c285ab4087a1debb81",
+        "android_client_info": {
+          "package_name": "com.example.project_santa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOtXwgPjxe_gBNj4K7AsE_YtDU0tcAURc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
